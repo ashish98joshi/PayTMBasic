@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const { JWT_SECRET } = require('../config');
 const { authMiddleware } = require('../middleware');
 
-
+// method to check if user already exists
 async function checkIfUserAlreadyExists(body, routerType) {
     if (routerType == 'signup') {
         return await User.findOne({
