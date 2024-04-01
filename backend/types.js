@@ -1,6 +1,6 @@
 const z = require('zod');
 
-export const signupType = z.object({
+const signupType = z.object({
     userName: z.string().email(),
     firstName: z.string(),
     lastName: z.string(),
@@ -8,13 +8,15 @@ export const signupType = z.object({
 
 })
 
-export const signInType = z.object({
+const signInType = z.object({
     userName: z.string().email(),
     password: z.string()
 })
 
-export const updateBody = z.object({
+const updateBody = z.object({
     userName: z.string().optional(),   
     password: z.string().optional(),
     firstName: z.string().optional()
 })
+
+module.exports = {signupType, signInType, updateBody}

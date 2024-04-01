@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const { signupType, signInType, updateBody } = require('../types');
-const { User } = require('../db')
+const { User, Account } = require('../db')
 const jwt = require('jsonwebtoken')
 const { JWT_SECRET } = require('../config');
 const { authMiddleware } = require('../middleware');
@@ -20,22 +20,33 @@ async function checkIfUserAlreadyExists(body, routerType) {
     }
 }
 
+// router.get('/', (req, res) => {
+//     res.send('hello there')
+// })
+
 router.post('/signup', async (req, res) => {
     const zodResult = signupType.safeParse(req.body);
-    
+    console.log(req.body);
     if (!zodResult.success) {
         return res.status(401).json({
             msg: 'Incorrect input'
         })
     }
     
-    if (await checkIfUserAlreadyExists(body, 'signup')) {
+    if (await checkIfUserAlreadyExists(req.body, 'signup')) {
         return res.status(411).json({
             msg: 'User already exists'
         })
     }
 
-    const user = await User.create(req.body)
+    const user = await User.create(req.body);
+
+    if (user) {
+        await Account.create({
+            userId: user._id,
+            balance: 1 + Math.random() * 10000
+        })
+    }
     const token = jwt.sign({userId: user._id}, JWT_SECRET);
     res.json({
         msg: 'User successfully created!',
