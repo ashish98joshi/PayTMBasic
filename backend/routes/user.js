@@ -20,9 +20,6 @@ async function checkIfUserAlreadyExists(body, routerType) {
     }
 }
 
-// router.get('/', (req, res) => {
-//     res.send('hello there')
-// })
 
 router.post('/signup', async (req, res) => {
     const zodResult = signupType.safeParse(req.body);

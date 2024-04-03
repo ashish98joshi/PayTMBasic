@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://ashish98joshi:ZlfoSxBDAdTgJhMD@cluster0.oca1shx.mongodb.net/PaytTM');
+require("dotenv").config()
+console.log(process.env.DATABASE_URL)
+mongoose.connect(process.env.DATABASE_URL);
 
 const userSchema = new mongoose.Schema({
     userName: {
@@ -46,4 +48,4 @@ const User = mongoose.model('User', userSchema);
 const Account = mongoose.model('Account', accountSchema);
 
 
-module.exports = { User, Account}
+module.exports = { User, Account }
