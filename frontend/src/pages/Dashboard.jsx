@@ -1,13 +1,26 @@
+import { useEffect, useState } from "react"
+import { Balance } from "../components/Balance"
+import { Topbar } from "../components/Topbar"
+import axios from 'axios'
+import { Searchbar } from "../components/Searchbar"
+
 export const Dashboard = () => {
+    const [balance, setBalance] = useState('');
+    // const BACKEND_URL = 'http://localhost:3000/api/v1/account/balance'
+    // useEffect(() => {
+    //     const getBalance = async () => {
+    //         const balance = await axios.get()
+    //     }
+    // }, [])
+
+    const users = [{
+        name: 'Ashish Joshi'
+    }]
     return <div className="bg-slate-300 h-screen flex justify-center">
         <div className="bg-white w-[1000px] h-fit rounded-md mt-32 border-black	">
-            <div className="border-b-2 flex justify-between pt-3 ml-4 mr-4">
-                <span className="font-bold text-xl">Payments App</span>
-                <div className="flex gap-2 text-center">
-                    <p className="text-md font-semibold pt-1">Hello</p>
-                    <div className="bg-slate-300 rounded-full w-8 h-8 items-center pt-1 mb-2 mr-2">U</div>
-                </div>
-            </div>
+            <Topbar/>
+            <Balance balance={'$10000'}/>
+            <Searchbar users={users}/>
         </div>
     </div>
 }
