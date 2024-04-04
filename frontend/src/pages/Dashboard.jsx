@@ -15,6 +15,8 @@ export const Dashboard = () => {
 
     const users = [{
         name: 'Ashish Joshi'
+    },{
+        name: 'Rahul Joshi'
     }]
     return <div className="bg-slate-300 h-screen flex justify-center">
         <div className="bg-white w-[1000px] h-fit rounded-md mt-32 border-black	">
