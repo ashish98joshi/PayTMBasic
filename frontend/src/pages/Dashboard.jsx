@@ -5,13 +5,19 @@ import axios from 'axios'
 import { Searchbar } from "../components/Searchbar"
 
 export const Dashboard = () => {
-    const [balance, setBalance] = useState('');
-    // const BACKEND_URL = 'http://localhost:3000/api/v1/account/balance'
-    // useEffect(() => {
-    //     const getBalance = async () => {
-    //         const balance = await axios.get()
-    //     }
-    // }, [])
+    const [balance, setBalance] = useState();
+    const BACKEND_URL = 'http://localhost:3000/api/v1/account/balance'
+    useEffect(() => {
+        const getBalance = async () => {
+            const userBalance = await axios.get('http://localhost:3000/api/v1/account/balance', 
+            {headers: {authorization: 'Bearer ' + localStorage.getItem('token')}})
+
+            if (userBalance) {
+                setBalance(userBalance.data.balance);
+            }
+        }
+        getBalance();
+    }, [])
 
     const users = [{
         name: 'Ashish Joshi'
@@ -21,7 +27,7 @@ export const Dashboard = () => {
     return <div className="bg-slate-300 h-screen flex justify-center">
         <div className="bg-white w-[1000px] h-fit rounded-md mt-32 border-black	">
             <Topbar/>
-            <Balance balance={'$10000'}/>
+            <Balance balance={balance}/>
             <Searchbar users={users}/>
         </div>
     </div>

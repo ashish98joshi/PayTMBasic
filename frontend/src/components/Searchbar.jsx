@@ -19,7 +19,7 @@ export const Searchbar = ({users}) => {
 
 function UserList({user, idx}) {
     const navigate = useNavigate();
-    const [modelOpen, setModalOpen] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
 
     function setModal() {
         setModalOpen(true);
@@ -33,6 +33,6 @@ function UserList({user, idx}) {
         <div>
             <Button onClick={setModal} label={'Send Money'}></Button>
         </div>
-        {modelOpen && <Modal modelOpen={modelOpen} setModalOpen={setModalOpen} username={user.name}/>}
+        {modalOpen && <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} username={user.name}/>}
     </div>
 }

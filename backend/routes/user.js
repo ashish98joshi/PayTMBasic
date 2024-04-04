@@ -54,6 +54,7 @@ router.post('/signup', async (req, res) => {
 
 router.post('/signin', async (req, res) => {
     const body = req.body;
+    console.log(body);
     const zodResult = signInType.safeParse(body);
     if (!zodResult.success) {
         res.status(403).json({
@@ -61,6 +62,7 @@ router.post('/signin', async (req, res) => {
         })
     }
     const user = await checkIfUserAlreadyExists(body, 'signin')
+    console.log(user)
     if (user) {
         const token = jwt.sign({userId: user._id}, JWT_SECRET)
         return res.json({
