@@ -27,12 +27,12 @@ function UserList({user, idx}) {
 
     return <div className='flex justify-between items-center'>
         <div className='flex gap-2'>
-            <div className="bg-slate-300 rounded-full w-9 h-9 text-center pt-1">{user.name[0]}</div>
-            <div className="pt-2 text-sm">{user.name}</div>
+            <div className="bg-slate-300 rounded-full w-9 h-9 text-center pt-1">{user.firstName[0]}</div>
+            <div className="pt-2 text-sm">{user.firstName} {user.lastName}</div>
         </div>
         <div>
             <Button onClick={setModal} label={'Send Money'}></Button>
         </div>
-        {modalOpen && <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} username={user.name}/>}
+        {modalOpen && <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} userId={user._id} username={user.firstName}/>}
     </div>
 }

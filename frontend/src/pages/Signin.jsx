@@ -25,7 +25,12 @@ export const Signin = () => {
                         password: password
                     })
                     console.log(response);
-                    navigate('/dashboard');
+                    if (response.status == 200) {
+                        localStorage.setItem('token', response.data.token)
+                        navigate('/dashboard');
+                    } else {
+                        alert('Error occured');
+                    }
                 }}></Button>
                 <Footer label={'Dont have an account?'} buttonText={'Sign up'} to={'/signup'}></Footer>
             </div>

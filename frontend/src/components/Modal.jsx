@@ -1,6 +1,12 @@
+import axios from 'axios'
 import { Button } from './Button'
+import { useNavigate } from 'react-router-dom'
+import { useState } from 'react';
 
-export const Modal = ({modalOpen, setModalOpen, username}) => {
+export const Modal = ({modalOpen, setModalOpen, username, userId}) => {
+    const navigate = useNavigate();
+    const [amount, setAmount] = useState();
+    
     return <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm">
         <div className="relative top-40 sm:left-[550px] md:left-[350px] lg:left-[700px] h-80 w-96 bg-white rounded-sm">
             <div className="flex flex-col gap-3 ">
@@ -11,13 +17,29 @@ export const Modal = ({modalOpen, setModalOpen, username}) => {
                 </div>
                 <div className="text-sm font-semibold ml-8">Amount (in Rs)</div>
                 <input
+                    onChange={(e) => {
+                        setAmount(e.target.value);
+                    }}
                     type="text" 
                     placeholder="Enter Amount" 
                     className="rounded-md outline-slate-300 border border-slate-300 mt-1 ml-7 mr-7 placeholder:p-2 placeholder:text-sm p-1 caret-slate-300">  
                 </input>
                 <div className="flex gap-2 justify-center pl-2">
                     <Button label={"Close"} onClick={() => {setModalOpen(false)}}/>
-                    <Button label={"Initiate Transfer"}/>
+                    <Button onClick={async () => {
+                        const response = await axios.post('http://localhost:3000/api/v1/account/transfer', {
+                            to: userId,
+                            amount: amount
+                        }, {
+                            headers: {
+                                authorization: "Bearer " + localStorage.getItem("token")
+                            }
+                        })
+                        if (response.status == 200) {
+                            setModalOpen(false);
+                            navigate('/dashboard');
+                        }
+                    }} label={"Initiate Transfer"}/>
                 </div>
             </div>
         </div>

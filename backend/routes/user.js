@@ -5,6 +5,7 @@ const { User, Account } = require('../db')
 const jwt = require('jsonwebtoken')
 const { JWT_SECRET } = require('../config');
 const { authMiddleware } = require('../middleware');
+const { Mongoose } = require('mongoose');
 
 // method to check if user already exists
 async function checkIfUserAlreadyExists(body, routerType) {
@@ -20,6 +21,15 @@ async function checkIfUserAlreadyExists(body, routerType) {
     }
 }
 
+router.get('/getUsers', authMiddleware, async (req, res) => {
+    const userId = req.userId;
+    const users = await User.find({_id: { $ne: userId }});
+    if (users) {
+        res.status(200).json({
+            users: users
+        })
+    }
+})
 
 router.post('/signup', async (req, res) => {
     const zodResult = signupType.safeParse(req.body);
@@ -54,7 +64,6 @@ router.post('/signup', async (req, res) => {
 
 router.post('/signin', async (req, res) => {
     const body = req.body;
-    console.log(body);
     const zodResult = signInType.safeParse(body);
     if (!zodResult.success) {
         res.status(403).json({
@@ -62,7 +71,6 @@ router.post('/signin', async (req, res) => {
         })
     }
     const user = await checkIfUserAlreadyExists(body, 'signin')
-    console.log(user)
     if (user) {
         const token = jwt.sign({userId: user._id}, JWT_SECRET)
         return res.json({
