@@ -27,7 +27,7 @@ export const Dashboard = () => {
             {headers: {authorization: 'Bearer ' + localStorage.getItem('token')}})
             console.log(allUsers);
             if (allUsers) {
-                setUsers([...users, ...allUsers.data.users]);
+                setUsers([...allUsers.data.users]);
             }
         }
         getUsers();
@@ -37,7 +37,7 @@ export const Dashboard = () => {
         <div className="bg-white w-[1000px] h-fit rounded-md mt-32 border-black	">
             <Topbar/>
             <Balance balance={balance}/>
-            <Searchbar users={users} />
+            <Searchbar users={users} setUsers={setUsers} setBalance={setBalance}/>
         </div>
     </div>
 }

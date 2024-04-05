@@ -1,10 +1,8 @@
 import axios from 'axios'
 import { Button } from './Button'
-import { useNavigate } from 'react-router-dom'
 import { useState } from 'react';
 
-export const Modal = ({modalOpen, setModalOpen, username, userId}) => {
-    const navigate = useNavigate();
+export const Modal = ({setModalOpen, username, userId, setBalance}) => {
     const [amount, setAmount] = useState();
     
     return <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm">
@@ -37,7 +35,7 @@ export const Modal = ({modalOpen, setModalOpen, username, userId}) => {
                         })
                         if (response.status == 200) {
                             setModalOpen(false);
-                            navigate('/dashboard');
+                            setBalance(prev => prev - amount);
                         }
                     }} label={"Initiate Transfer"}/>
                 </div>
